@@ -38,14 +38,23 @@
   z-index: 1;
 }
 
+.body-is-load {
+  .screen__footer {
+    bottom: 0;
+    opacity: 1;
+  }  
+}
+
 .screen__footer {
   position: absolute;
-  bottom: 0;
+  bottom: -28px;
+  opacity: 0;
   left: 0;
   right: 0;
   color: $c-dark;
   background-color: $c-light;
   z-index: 1;
+  transition: 0.5s cubic-bezier(.63,.76,.32,.9);
 
   @media (max-width: $tablet) and (orientation: portrait) {
     width: 3.5rem;

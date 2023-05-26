@@ -20,10 +20,18 @@
 }
 
 .page-header__wrapper {
-  @include container;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  opacity: 0;
+  transition: padding 0.5s cubic-bezier(.63,.76,.32,.9);
+}
+
+.body-is-load {
+  .page-header__wrapper {
+    @include container;
+    opacity: 1;
+  }
 }
 
 .page-header__logo {
@@ -35,6 +43,8 @@
   padding: 1rem 0;
   width: 10rem;
   color: $c-light;
+  opacity: 0;
+  transition: opacity 0.5s;
 
   @media (min-width: $stop-scaling) {
     top: -5px;
@@ -129,7 +139,10 @@
 
 .page-header__nav {
   display: flex;
+  opacity: 0;
   align-items: center;
+
+  transition: opacity .5s cubic-bezier(0, -1.57, 0.83, 0.67);
 
   @media (max-width: $tablet) and (orientation: portrait) {
     position: fixed;
@@ -251,8 +264,7 @@
       background-color: $c-light;
       display: block;
       left: 0;
-      transition: 0.4s;
-      
+      transition: width 0.5s cubic-bezier(.63,.76,.32,.9);
 
       @media (max-width: $tablet) and (orientation: portrait) {
         left: 0;
@@ -267,19 +279,12 @@
       }
     }
 
-    &.active {
-      &::after {
-        width: 100%;
-      }
-    }
-
     &:hover,
     &:focus {
       color: $c-purple;
       outline: none;
 
       &::after {
-        opacity: 1;
         background-color: $c-purple;
         width: 100%;
       }
@@ -302,5 +307,23 @@
   @media (max-width: $mobile) and (orientation: landscape) {
     margin-left: 0;
     width: 100%;
+  }
+}
+
+.body-is-load {
+  .page-header__logo {
+    opacity: 1;
+  }
+
+  .page-header__nav {
+    display: flex;
+    opacity: 1;
+  }
+
+  a {
+    &.active::after {
+      width: 100%;
+      transition: width 0.5s cubic-bezier(0,-2.07,.46,.87);
+    }
   }
 }

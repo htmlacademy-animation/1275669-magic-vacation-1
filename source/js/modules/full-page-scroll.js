@@ -6,19 +6,27 @@ export default class FullPageScroll {
     this.scrollFlag = true;
     this.timeout = null;
 
+    this.bodyElement = document.body;
     this.screenElements = document.querySelectorAll(`.screen:not(.screen--result)`);
     this.menuElements = document.querySelectorAll(`.page-header__menu .js-menu-link`);
 
     this.activeScreen = 0;
     this.onScrollHandler = this.onScroll.bind(this);
     this.onUrlHashChengedHandler = this.onUrlHashChanged.bind(this);
+    this.setBodyIsLoad = this.setBodyIsLoad.bind(this);
+
   }
 
   init() {
     document.addEventListener(`wheel`, throttle(this.onScrollHandler, this.THROTTLE_TIMEOUT, {trailing: true}));
     window.addEventListener(`popstate`, this.onUrlHashChengedHandler);
-
+    window.addEventListener(`load`, this.setBodyIsLoad);
     this.onUrlHashChanged();
+  }
+
+  setBodyIsLoad() {
+    this.bodyElement.classList.add(`body-is-load`);
+    window.removeEventListener(`load`, this.setBodyIsLoad);
   }
 
   onScroll(evt) {
