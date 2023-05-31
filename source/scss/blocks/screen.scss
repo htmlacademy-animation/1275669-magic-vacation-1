@@ -297,6 +297,33 @@
   }
 }
 
+@keyframes bg {
+  0% {
+    top: 100%;
+  }
+  99% {
+    top: 0;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+.backdrop {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1;
+  background-color: $c-dark;
+  transition: top 1s;
+}
+
+.screen--hidden.active ~ .backdrop {
+  animation: bg 1s;
+}
+
 .screen--story {
   background-color: $c-dark;
   background-image: url("../img/slide1.jpg"), url("../img/slide2.jpg"), url("../img/slide3.jpg"), url("../img/slide4.jpg");
