@@ -309,7 +309,7 @@
   }
 }
 
-.backdrop {
+.back-drop {
   min-height: 100vh;
   min-width: 100vw;
   position: absolute;
@@ -317,12 +317,15 @@
   right: 0;
   z-index: 1;
   background-color: $c-dark;
-  transition: top 1s;
+
 }
 
-.screen--hidden.active ~ .backdrop {
-  animation: bg 1s;
+
+.back-drop.active {
+  animation: bg .5s;
 }
+
+
 
 .screen--story {
   background-color: $c-dark;
