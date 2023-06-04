@@ -7,9 +7,11 @@ export default class FullPageScroll {
     this.timeout = null;
 
     this.bodyElement = document.body;
+    this.backDrop = document.querySelector(`.back-drop`);
     this.screenElements = document.querySelectorAll(`.screen:not(.screen--result)`);
     this.menuElements = document.querySelectorAll(`.page-header__menu .js-menu-link`);
 
+    this.prevScreen = 0;
     this.activeScreen = 0;
     this.onScrollHandler = this.onScroll.bind(this);
     this.onUrlHashChengedHandler = this.onUrlHashChanged.bind(this);
@@ -27,6 +29,18 @@ export default class FullPageScroll {
   setBodyIsLoad() {
     this.bodyElement.classList.add(`body-is-load`);
     window.removeEventListener(`load`, this.setBodyIsLoad);
+  }
+
+  changeVisibilityDisplayWithBackDrop() {
+    if (this.prevScreen === 1 && this.activeScreen === 2) {
+      this.backDrop.classList.add(`active`);
+      setTimeout(() => {
+        this.backDrop.classList.remove(`active`);
+        this.changeVisibilityDisplay();
+      }, 490);
+    } else {
+      this.changeVisibilityDisplay();
+    }
   }
 
   onScroll(evt) {
@@ -49,12 +63,13 @@ export default class FullPageScroll {
 
   onUrlHashChanged() {
     const newIndex = Array.from(this.screenElements).findIndex((screen) => location.hash.slice(1) === screen.id);
+    this.prevScreen = this.activeScreen;
     this.activeScreen = (newIndex < 0) ? 0 : newIndex;
     this.changePageDisplay();
   }
 
   changePageDisplay() {
-    this.changeVisibilityDisplay();
+    this.changeVisibilityDisplayWithBackDrop();
     this.changeActiveMenuItem();
     this.emitChangeDisplayEvent();
   }
